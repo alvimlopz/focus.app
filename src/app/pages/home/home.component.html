@@ -1,1 +1,11 @@
-<p>home works!</p>
+<div class="welcome-container">
+  <h1>Bom ver você aqui! 👋</h1>
+
+  <input type="text" class="form-control input-name"
+    placeholder="Qual é o seu nome?"
+    [(ngModel)]="userName">
+
+  <button class="btn-next" [disabled]="!userName" (click)="goToPomodoro()">
+    <i class="bi bi-arrow-right"></i>
+  </button>
+</div>
