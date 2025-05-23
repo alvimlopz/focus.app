@@ -2,19 +2,27 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MusicModalComponent } from '../../components/music-modal/music-modal.component';
 import { SettingsMenuComponent } from '../../components/settings-menu/settings-menu.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-pomodoro',
   standalone: true,
-  imports: [CommonModule, MusicModalComponent, SettingsMenuComponent],
+  imports: [CommonModule, MusicModalComponent, SettingsMenuComponent, FormsModule],
   templateUrl: './pomodoro.component.html',
   styleUrls: ['./pomodoro.component.scss']
 })
 export class PomodoroComponent {
 
+  mantraPadrao = '“Encontre a maneira, e se não houver, crie-a.”';
+mantraPersonalizado: string | null = null;
+
   showMusicModal = false;
   showSettings = false;
 
+
+mostrarMenu = false;
+editandoMantra = false;
+novoMantra = '';
   userName: string = '';
   timer: string = '25:00';
   timerRunning = false;
@@ -35,7 +43,34 @@ export class PomodoroComponent {
   ngOnInit() {
     this.userName = localStorage.getItem('userName') || 'Usuário';
     this.updateTimerDisplay();
+    this.mantraPersonalizado = localStorage.getItem('mantra') || null;
   }
+
+  get mantraAtual() {
+  return this.mantraPersonalizado || this.mantraPadrao;
+}
+
+editarMantra() {
+  this.editandoMantra = true;
+  this.novoMantra = this.mantraAtual;
+}
+
+salvarMantra() {
+  if (this.novoMantra.trim() === '') {
+    this.mantraPersonalizado = null;
+    localStorage.removeItem('mantra');
+  } else {
+    this.mantraPersonalizado = this.novoMantra.trim();
+    localStorage.setItem('mantra', this.mantraPersonalizado);
+  }
+  this.editandoMantra = false;
+}
+
+removerMantra() {
+  this.mantraPersonalizado = null;
+  localStorage.removeItem('mantra');
+  this.editandoMantra = false;
+}
 
    openSettings() {
     this.showSettings = true;

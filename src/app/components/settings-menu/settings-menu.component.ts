@@ -13,9 +13,9 @@ export class SettingsMenuComponent {
 
   @Input() focusTimeSettings: any;
   @Output() closeMenuEvent = new EventEmitter();
-  @Output() settingsChanged = new EventEmitter();
+  @Output() settingsChanged = new EventEmitter<any>(); // 🔥 Emitir pra cima
 
-  currentView = 'menu'; // 'menu' ou 'focus'
+  currentView = 'menu';
 
   openFocusTime() {
     this.currentView = 'focus';
@@ -30,6 +30,6 @@ export class SettingsMenuComponent {
   }
 
   onFocusSettingsChanged(event: any) {
-    this.settingsChanged.emit(event);
+    this.settingsChanged.emit(event); // 🔥 REPASSA PRO POMODORO
   }
 }

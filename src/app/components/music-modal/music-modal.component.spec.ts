@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MusicModalComponent } from '../../../../public/music-modal.component';
+import { MusicModalComponent } from './music-modal.component';
 
 describe('MusicModalComponent', () => {
   let component: MusicModalComponent;

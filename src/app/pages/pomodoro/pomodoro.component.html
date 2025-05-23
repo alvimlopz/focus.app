@@ -19,7 +19,38 @@
   <div class="timer">{{ timer }}</div>
 
   <!-- Frase -->
-  <div class="quote">“Encontre a maneira, e se não houver, crie-a.”</div>
+<div class="mantra-container">
+  <div class="mantra">
+    <ng-container *ngIf="!editandoMantra; else editMantra">
+      {{ mantraAtual }}
+    </ng-container>
+    <ng-template #editMantra>
+      <input 
+        [(ngModel)]="novoMantra"
+        (blur)="salvarMantra()"
+        (keydown.enter)="salvarMantra()"
+        autofocus
+      />
+    </ng-template>
+  </div>
+
+  <div class="mantra-actions">
+    <button (click)="mostrarMenu = !mostrarMenu">
+      <i class="bi bi-three-dots"></i>
+    </button>
+
+    <div class="mantra-menu" *ngIf="mostrarMenu">
+      <button (click)="editarMantra(); mostrarMenu = false">
+        <i class="bi bi-pencil"></i> Editar mantra
+      </button>
+      <button (click)="removerMantra(); mostrarMenu = false">
+        <i class="bi bi-trash"></i> Remover mantra
+      </button>
+    </div>
+  </div>
+</div>
+
+
 
   <!-- Controles -->
   <div class="controls">

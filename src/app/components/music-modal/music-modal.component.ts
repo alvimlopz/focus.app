@@ -1,19 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { MusicService } from '../../services/music.service';
 
 @Component({
   selector: 'app-music-modal',
-  templateUrl: './music-modal.component.html',
-  styleUrls: ['./music-modal.component.scss'],
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule],
+  templateUrl: './music-modal.component.html',
+  styleUrls: ['./music-modal.component.scss']
 })
 export class MusicModalComponent {
 
   @Output() closeModal = new EventEmitter<void>();
 
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(
+    public musicService: MusicService, // 🔥 Agora tá injetado
+    private sanitizer: DomSanitizer
+  ) {}
 
   activeTab = 'spotify';
 
@@ -21,14 +25,13 @@ export class MusicModalComponent {
     {
       name: 'Lofi Beats',
       image: '/lofi.png',
-      url: 'https://open.spotify.com/embed/artist/1dABGukgZ8XKKOdd2rVSHM?utm_source=generator'
+       url: 'https://open.spotify.com/embed/artist/1dABGukgZ8XKKOdd2rVSHM?utm_source=generator'
     }
-   
   ];
 
   selectedSpotify: any = null;
+  selectedPlaylist: any = null; // 🔥 Isso que tava faltando
 
-  // Native Player
   nativePlaylists = [
     {
       name: 'Ambient and Nature',
@@ -48,13 +51,6 @@ export class MusicModalComponent {
     }
   ];
 
-  selectedNative: any = null;
-  currentTrackIndex = 0;
-  currentTrack: any = null;
-
-  @ViewChild('audio') audioRef!: ElementRef;
-
-  // Spotify
   getSafeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
@@ -63,26 +59,12 @@ export class MusicModalComponent {
     this.selectedSpotify = playlist;
   }
 
-  // Native
   selectNative(playlist: any) {
-    this.selectedNative = playlist;
-    this.playTrack(0);
+    this.selectedPlaylist = playlist;
   }
 
-  playTrack(index: number) {
-    this.currentTrackIndex = index;
-    this.currentTrack = this.selectedNative.tracks[index];
-    const audio = this.audioRef?.nativeElement as HTMLAudioElement;
-    if (audio) {
-      audio.src = this.currentTrack.url;
-      audio.play();
-    }
-  }
-
-  nextTrack() {
-    if (this.currentTrackIndex + 1 < this.selectedNative.tracks.length) {
-      this.playTrack(this.currentTrackIndex + 1);
-    }
+  playTrack(track: any) {
+    this.musicService.togglePlay(track);
   }
 
   close() {

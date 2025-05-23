@@ -1,1 +1,8 @@
 <router-outlet></router-outlet>
+
+<!-- Player invisível -->
+<audio 
+  #globalAudio 
+  (ended)="onTrackEnd()" 
+  [src]="musicService.currentTrack?.url"
+></audio>
