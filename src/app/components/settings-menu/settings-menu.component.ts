@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SettingsFocusTimeComponent } from '../settings-focus-time/settings-focus-time.component';
 
 @Component({
@@ -11,23 +11,25 @@ import { SettingsFocusTimeComponent } from '../settings-focus-time/settings-focu
 })
 export class SettingsMenuComponent {
 
+  @Input() focusTimeSettings: any;
   @Output() closeMenuEvent = new EventEmitter();
+  @Output() settingsChanged = new EventEmitter();
 
-  showFocusTime = false;
+  currentView = 'menu'; // 'menu' ou 'focus'
+
+  openFocusTime() {
+    this.currentView = 'focus';
+  }
+
+  backToMenu() {
+    this.currentView = 'menu';
+  }
 
   closeMenu() {
     this.closeMenuEvent.emit();
   }
 
-  openFocusTime() {
-    this.showFocusTime = true;
-  }
-
-  closeFocusTime() {
-    this.showFocusTime = false;
-  }
-
-  onSettingsChanged(event: any) {
-    console.log('Configurações atualizadas:', event);
+  onFocusSettingsChanged(event: any) {
+    this.settingsChanged.emit(event);
   }
 }

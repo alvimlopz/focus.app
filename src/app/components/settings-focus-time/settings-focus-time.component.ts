@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -11,13 +11,22 @@ import { FormsModule } from '@angular/forms';
 })
 export class SettingsFocusTimeComponent {
 
-  @Output() close = new EventEmitter();
+  @Input() focusTimeSettings: any;
   @Output() settingsChanged = new EventEmitter();
 
   preset = 'custom';
   customPomodoro = 25;
   customShortBreak = 5;
   customLongBreak = 15;
+
+  ngOnInit() {
+    if (this.focusTimeSettings) {
+      this.preset = this.focusTimeSettings.preset;
+      this.customPomodoro = this.focusTimeSettings.pomodoro;
+      this.customShortBreak = this.focusTimeSettings.shortBreak;
+      this.customLongBreak = this.focusTimeSettings.longBreak;
+    }
+  }
 
   selectPreset(preset: string) {
     this.preset = preset;
@@ -36,7 +45,7 @@ export class SettingsFocusTimeComponent {
       this.customLongBreak = 25;
     }
 
-    this.emitChanges();
+    this.emitChanges(); // 🔥 Importante! Garante que ao clicar no preset, já atualiza
   }
 
   emitChanges() {
@@ -46,9 +55,5 @@ export class SettingsFocusTimeComponent {
       longBreak: this.customLongBreak,
       preset: this.preset
     });
-  }
-
-  closeComponent() {
-    this.close.emit();
   }
 }

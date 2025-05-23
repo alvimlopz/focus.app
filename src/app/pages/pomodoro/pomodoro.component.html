@@ -26,9 +26,12 @@
     <button class="btn" (click)="openMusicModal()">
       <i class="bi bi-music-note-beamed"></i>
     </button>
-    <button class="btn btn-start">
-      START
-    </button>
+
+   <button class="btn btn-start" (click)="toggleTimer()">
+  {{ timerRunning ? 'STOP' : 'START' }}
+</button>
+
+
     <button class="btn">
       <i class="bi bi-list"></i>
     </button>
@@ -37,8 +40,11 @@
 <!-- Menu de Configurações -->
 <app-settings-menu 
   *ngIf="showSettings"
-  (closeMenuEvent)="closeSettings()">
+  [focusTimeSettings]="focusTimeSettings"
+  (closeMenuEvent)="closeSettings()"
+  (settingsChanged)="onSettingsChanged($event)">
 </app-settings-menu>
+
 
 <!-- Modal de Música -->
 <app-music-modal 

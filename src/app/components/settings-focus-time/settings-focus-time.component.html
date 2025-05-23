@@ -1,1 +1,58 @@
-<p>settings-focus-time works!</p>
+<div class="focus-time-settings">
+
+  <!-- Presets -->
+  <div class="presets">
+    <label>
+      <input type="radio" name="preset" (change)="selectPreset('popular')" [checked]="preset === 'popular'">
+      <strong>Popular</strong>
+      <div class="description">
+        20 min pomodoro<br>
+        5 min descanso<br>
+        15 min longo descanso
+      </div>
+    </label>
+
+    <label>
+      <input type="radio" name="preset" (change)="selectPreset('medium')" [checked]="preset === 'medium'">
+      <strong>Médio</strong>
+      <div class="description">
+        40 min pomodoro<br>
+        8 min descanso<br>
+        20 min longo descanso
+      </div>
+    </label>
+
+    <label>
+      <input type="radio" name="preset" (change)="selectPreset('extended')" [checked]="preset === 'extended'">
+      <strong>Extendido</strong>
+      <div class="description">
+        60 min pomodoro<br>
+        10 min descanso<br>
+        25 min longo descanso
+      </div>
+    </label>
+
+    <label>
+      <input type="radio" name="preset" (change)="selectPreset('custom')" [checked]="preset === 'custom'">
+      <strong>Personalizado</strong>
+    </label>
+
+    <!-- Sliders aparecem só no personalizado -->
+    <div class="sliders" *ngIf="preset === 'custom'">
+      <label>
+        {{ customPomodoro }} min <span>Pomodoro</span>
+        <input type="range" min="10" max="60" [(ngModel)]="customPomodoro" (input)="emitChanges()">
+      </label>
+
+      <label>
+        {{ customShortBreak }} min <span>Descanso</span>
+        <input type="range" min="2" max="20" [(ngModel)]="customShortBreak" (input)="emitChanges()">
+      </label>
+
+      <label>
+        {{ customLongBreak }} min <span>Longo descanso</span>
+        <input type="range" min="5" max="30" [(ngModel)]="customLongBreak" (input)="emitChanges()">
+      </label>
+    </div>
+  </div>
+</div>

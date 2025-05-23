@@ -1,29 +1,35 @@
 <div class="settings-menu">
   <div class="header">
-    <h3>Configurações</h3>
+    <button *ngIf="currentView === 'focus'" (click)="backToMenu()">
+      <i class="bi bi-arrow-left"></i>
+    </button>
+    <h3>{{ currentView === 'menu' ? 'Configurações' : 'Tempo de concentração' }}</h3>
     <button (click)="closeMenu()">
       <i class="bi bi-x-lg"></i>
     </button>
   </div>
 
-  <ul class="options">
-    <li (click)="openFocusTime()">
-      <i class="bi bi-clock"></i> Tempo de concentração
-    </li>
-    <li>
-      <i class="bi bi-bell"></i> Alarme
-    </li>
-    <li>
-      <i class="bi bi-arrow-repeat"></i> Iniciar automaticamente
-    </li>
-    <li>
-      <i class="bi bi-chat-dots"></i> Notificações
-    </li>
-  </ul>
-</div>
+  <ng-container *ngIf="currentView === 'menu'">
+    <ul class="options">
+      <li (click)="openFocusTime()">
+        <i class="bi bi-clock"></i> Tempo de concentração
+      </li>
+      <li>
+        <i class="bi bi-bell"></i> Alarme
+      </li>
+      <li>
+        <i class="bi bi-arrow-repeat"></i> Iniciar automaticamente
+      </li>
+      <li>
+        <i class="bi bi-chat-dots"></i> Notificações
+      </li>
+    </ul>
+  </ng-container>
 
-<app-settings-focus-time 
-  *ngIf="showFocusTime" 
-  (close)="closeFocusTime()" 
-  (settingsChanged)="onSettingsChanged($event)">
-</app-settings-focus-time>
+  <ng-container *ngIf="currentView === 'focus'">
+    <app-settings-focus-time
+      [focusTimeSettings]="focusTimeSettings"
+      (settingsChanged)="onFocusSettingsChanged($event)">
+    </app-settings-focus-time>
+  </ng-container>
+</div>

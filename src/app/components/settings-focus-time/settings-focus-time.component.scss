@@ -1,0 +1,38 @@
+.focus-time-settings {
+  padding: 16px;
+
+  .presets label {
+    display: block;
+    margin-bottom: 16px;
+    cursor: pointer;
+
+    input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .description {
+      font-size: 0.9rem;
+      color: #777;
+    }
+  }
+
+  .sliders label {
+    display: block;
+    margin-bottom: 12px;
+
+    span {
+      float: right;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+  }
+}
