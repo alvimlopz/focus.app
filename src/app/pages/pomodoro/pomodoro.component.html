@@ -1,1 +1,47 @@
-<p>pomodoro works!</p>
+<div class="pomodoro-container">
+
+  <!-- Nome do usuário -->
+  <div class="username">{{ userName }}</div>
+
+  <!-- Contadores centralizados -->
+  <div class="counters-center">
+    <div>{{ pomodoros }} pomodoros</div>
+    <div>{{ shortBreaks }} descansos</div>
+    <div>{{ longBreaks }} longo descansos</div>
+  </div>
+
+  <!-- Botão de configurações no canto -->
+  <div class="settings" (click)="openSettings()">
+  <i class="bi bi-gear"></i>
+</div>
+
+  <!-- Timer -->
+  <div class="timer">{{ timer }}</div>
+
+  <!-- Frase -->
+  <div class="quote">“Encontre a maneira, e se não houver, crie-a.”</div>
+
+  <!-- Controles -->
+  <div class="controls">
+    <button class="btn" (click)="openMusicModal()">
+      <i class="bi bi-music-note-beamed"></i>
+    </button>
+    <button class="btn btn-start">
+      START
+    </button>
+    <button class="btn">
+      <i class="bi bi-list"></i>
+    </button>
+  </div>
+</div>
+<!-- Menu de Configurações -->
+<app-settings-menu 
+  *ngIf="showSettings"
+  (closeMenuEvent)="closeSettings()">
+</app-settings-menu>
+
+<!-- Modal de Música -->
+<app-music-modal 
+  *ngIf="showMusicModal" 
+  (closeModal)="closeMusicModal()">
+</app-music-modal>

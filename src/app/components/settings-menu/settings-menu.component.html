@@ -1,0 +1,29 @@
+<div class="settings-menu">
+  <div class="header">
+    <h3>Configurações</h3>
+    <button (click)="closeMenu()">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <ul class="options">
+    <li (click)="openFocusTime()">
+      <i class="bi bi-clock"></i> Tempo de concentração
+    </li>
+    <li>
+      <i class="bi bi-bell"></i> Alarme
+    </li>
+    <li>
+      <i class="bi bi-arrow-repeat"></i> Iniciar automaticamente
+    </li>
+    <li>
+      <i class="bi bi-chat-dots"></i> Notificações
+    </li>
+  </ul>
+</div>
+
+<app-settings-focus-time 
+  *ngIf="showFocusTime" 
+  (close)="closeFocusTime()" 
+  (settingsChanged)="onSettingsChanged($event)">
+</app-settings-focus-time>
